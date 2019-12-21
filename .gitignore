@@ -240,3 +240,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/game_on_64bits/a.out
+/game_on_64bits/game64

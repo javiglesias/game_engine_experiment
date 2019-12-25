@@ -11,8 +11,8 @@ void Camera::Init(int Width, int Height) {
 	mainWindow = SDL_CreateWindow("mysterious-hat-engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		Width, Height, SDL_WINDOW_SHOWN);
 	oldRenderer = mainRenderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_TARGETTEXTURE);
-	OO.Position[0] = Width / 2;
-	OO.Position[1] = Height / 2;
+	OO.Position[0] = 0;
+	OO.Position[1] = 0;
 	OO.Position[2] = 0; //2-D
 	Points.push_back(OO);
 	temp = Points;

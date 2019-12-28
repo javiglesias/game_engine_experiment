@@ -122,12 +122,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Objects\Circle.cpp" />
     <ClCompile Include="Objects\Line.cpp" />
-    <ClCompile Include="Objects\Object.hpp" />
+    <ClCompile Include="Objects\Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Line.hpp" />
     <ClInclude Include="Objects\Point.hpp" />
     <ClInclude Include="Objects\Circle.hpp" />
+    <ClInclude Include="Objects\Triangle.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

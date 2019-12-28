@@ -2,7 +2,8 @@
 #include <SDL.h>
 //#include "../Objects/Point.hpp"
 #include "../Objects/Circle.hpp"
-#include "../Objects/Line.hpp"
+//#include "../Objects/Line.hpp"
+#include "../Objects/Triangle.hpp"
 #include <vector>
 #include <cstdlib>
 #include <thread>

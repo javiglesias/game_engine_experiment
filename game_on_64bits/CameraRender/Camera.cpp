@@ -52,7 +52,7 @@ void Camera::Init(int Width, int Height) {
 			{
 				for (int i = 0; i < Points.size(); ++i)
 				{
-					Points[i] = Points[i].Scale(2, 2, 0);
+					Points[i] = Points[i].Scale(2, 2, 0); 
 				}
 			}
 			if (keyEvent.key.keysym.sym == SDLK_r)
@@ -61,6 +61,25 @@ void Camera::Init(int Width, int Height) {
 				{
 					Points[i] = Points[i].RotatePoint("XY", 15);
 				}
+			}
+			if (keyEvent.key.keysym.sym == SDLK_f)
+			{
+				Triangle triangle;
+				std::vector<Point> trianglePoints;
+				int mouseX = 0, mouseY = 0;
+				Point X, T, S;
+				SDL_GetMouseState(&mouseX, &mouseY);
+				X.Position[0] = mouseX;
+				X.Position[1] = mouseY;
+				X.Position[2] = 0;
+				T.Position[0] = X.Position[0]+10;
+				T.Position[1] = X.Position[1]+10;
+				T.Position[2] = 0;
+				S.Position[0] = T.Position[0]-20;
+				S.Position[1] = T.Position[1];
+				S.Position[2] = 0;
+				trianglePoints = triangle.CreateTriangle(X, T, S);
+				Points.insert(Points.end(), trianglePoints.begin(), trianglePoints.end());
 			}
 			if (keyEvent.key.keysym.sym == SDLK_w)
 			{

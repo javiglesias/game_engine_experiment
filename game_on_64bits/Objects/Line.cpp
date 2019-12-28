@@ -26,8 +26,7 @@ std::vector<Point> Line::CreateLine(Point _start, Point _end) {
 		}
 		lineSegment.push_back(temp);
 	}
-	//lineSegment.push_back(_end);
-	std::cout << lineSegment.size() << std::endl;
+	lineSegment.push_back(_end);
 	return lineSegment;
 }
 std::vector<Point> Line::CreateLineDDA(Point _start, Point _end) {

@@ -16,17 +16,17 @@ std::vector<Point> Line::CreateLine(Point _start, Point _end) {
 	while (temp.Position[0] != _end.Position[0] && 
 		temp.Position[1] != _end.Position[1]) {
 		int err2 = err * 2;
-		if (err2 >= dy) {
-			err -= dy;
+		lineSegment.push_back(temp);
+		if (err2 >= -dy) {
+			err -= abs(dy);
 			temp.Position[0] += sx;
 		}
 		if(err2 < dx){
 			err += dx;
 			temp.Position[1] += sy;
 		}
-		lineSegment.push_back(temp);
 	}
-	lineSegment.push_back(_end);
+	//lineSegment.push_back(_end);
 	return lineSegment;
 }
 std::vector<Point> Line::CreateLineDDA(Point _start, Point _end) {

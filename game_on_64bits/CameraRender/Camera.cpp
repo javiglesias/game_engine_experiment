@@ -1,22 +1,13 @@
 #include "Camera.hpp"
 #include <queue>
 
-void Camera::Init(int Width, int Height) {
-	Circle circleObject;
-	Line lineSegment;
-	Lighting light;
-	std::vector<Point> quarter;
-	std::vector<Point> line;
+void Camera::Init(int Width, int Height)
+{
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) 
 		return;
 	mainWindow = SDL_CreateWindow("mysterious-hat-engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		Width, Height, SDL_WINDOW_SHOWN);
-	oldRenderer = mainRenderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_TARGETTEXTURE);
-	OO.Position[0] = 0;
-	OO.Position[1] = 0;
-	OO.Position[2] = 0;
-	Points.push_back(OO);
-	temp = Points;
+	mainRenderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_TARGETTEXTURE);
 	while (playing) {
 		SDL_PollEvent(&keyEvent);
 		switch (keyEvent.type)
@@ -24,19 +15,19 @@ void Camera::Init(int Width, int Height) {
 		case SDL_MOUSEMOTION:
 			int mouseX, mouseY;
 			SDL_GetMouseState(&mouseX, &mouseY);
-			light.Position[0] = (int)OO.Position[0];
-			light.Position[1] = (int)OO.Position[1];
+			light.Position[0] = 0;
+			light.Position[1] = 0;
 			Ilumination = light.CalculateLight(mouseX, mouseY);
 			break;
 		case SDL_MOUSEBUTTONDOWN: {
-			int mouseX, mouseY;
+			/*int mouseX, mouseY;
 			Point T;
 			SDL_GetMouseState(&mouseX, &mouseY);
 			T.Position[0] = mouseX;
 			T.Position[1] = mouseY;
 			T.Position[2] = 0;
 			quarter = circleObject.CreateCircle(T, 100);
-			Points.insert(Points.end(), quarter.begin(), quarter.end());
+			Points.insert(Points.end(), quarter.begin(), quarter.end());*/
 			break;
 		}
 		case SDL_KEYDOWN:
@@ -44,10 +35,14 @@ void Camera::Init(int Width, int Height) {
 				QuitNicely();
 				return;
 			}
-			if (keyEvent.key.keysym.sym == SDLK_d)
+			if (keyEvent.key.keysym.sym == SDLK_g)
 			{
-				Points = temp;
+				//Generate the map
+				SDL_RenderDrawLine(mainRenderer, 0, 0, 100, 100);
+				
+				
 			}
+			/*
 			if (keyEvent.key.keysym.sym == SDLK_a)
 			{
 				for (int i = 0; i < Points.size(); ++i)
@@ -101,26 +96,27 @@ void Camera::Init(int Width, int Height) {
 				line = lineSegment.CreateLine(S, T);
 				Points.insert(Points.end(), line.begin(), line.end());
 			}
+			*/
 			break;
 		default:
 			break;
 		}
-		if (!quarter.empty())
-			RenderCircle(quarter);
-		RenderScene(Points, Lines, Triangles);
+		/*if (!quarter.empty())
+			RenderCircle(quarter);*/
+		RenderScene();
 	}
 }
-void Camera::RenderCircle(std::vector<Point> circleToRender) {
+/*void Camera::RenderCircle(std::vector<Point> circleToRender) {
 	SDL_SetRenderDrawColor(mainRenderer, 0x00, 0x00, 0x00, 0x00);
 	for each (auto circlePoint in circleToRender)
 	{
 		SDL_RenderDrawPoint(mainRenderer, circlePoint.Position[0], circlePoint.Position[1]);
 	}
 	SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-}
-void Camera::RenderScene(std::vector<Point> points, std::vector<Line> lines, std::vector<Triangle> triangles) {
-	SDL_SetRenderDrawColor(mainRenderer, 0x00, 0x00, 0x00, 0x00);
-	if(points.size() > 0)
+}*/
+void Camera::RenderScene() {
+	//SDL_SetRenderDrawColor(mainRenderer, 0x00, 0x00, 0x00, 0x00);
+	/*if(points.size() > 0)
 		for each (auto item in points)
 		{
 			SDL_RenderDrawPoint(mainRenderer, item.Position[0], item.Position[1]);	
@@ -140,14 +136,16 @@ void Camera::RenderScene(std::vector<Point> points, std::vector<Line> lines, std
 				item.l2.end.Position[0], item.l2.end.Position[0]);
 			SDL_RenderDrawLine(mainRenderer, item.l3.start.Position[0], item.l3.start.Position[1],
 				item.l3.end.Position[0], item.l3.end.Position[0]);
-		}
+		}*/
 	SDL_SetRenderDrawColor(mainRenderer, 0xFF*Ilumination, 0xFF*Ilumination, 0xFF*Ilumination, 0xFF);
 	SDL_RenderPresent(mainRenderer);
+}
+void ClearRenderer(SDL_Renderer *mainRenderer)
+{
 	SDL_RenderClear(mainRenderer);
 }
 void Camera::QuitNicely() {
 	SDL_DestroyRenderer(mainRenderer);
-	SDL_DestroyRenderer(oldRenderer);
 	SDL_DestroyWindow(mainWindow);
 	SDL_Quit();
 }

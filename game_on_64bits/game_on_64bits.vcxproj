@@ -128,6 +128,8 @@
   <ItemGroup>
     <ClInclude Include="Lighting\Lighting.hpp" />
     <ClInclude Include="Objects\Line.hpp" />
+    <ClInclude Include="Objects\MapGenerator.hpp" />
+    <ClInclude Include="Objects\Player.hpp" />
     <ClInclude Include="Objects\Point.hpp" />
     <ClInclude Include="Objects\Circle.hpp" />
     <ClInclude Include="Objects\Triangle.hpp" />

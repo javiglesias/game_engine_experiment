@@ -10,7 +10,7 @@ float Lighting::CalculateLight(int actualX, int actualY)
 			{
 				if(actualY <= Position[1] + Intensity)
 				{
-					lightPercentage = abs(actualX-Position[0]
+					lightPercentage = (actualX-Position[0]
 					+ actualY-Position[1])/Intensity;
 				}
 			}

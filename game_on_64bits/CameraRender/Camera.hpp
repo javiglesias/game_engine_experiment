@@ -1,9 +1,9 @@
 #pragma once
 #include <SDL.h>
 //#include "../Objects/Point.hpp"
-#include "../Objects/Circle.hpp"
+//#include "../Objects/Circle.hpp"
 //#include "../Objects/Line.hpp"
-#include "../Objects/Triangle.hpp"
+//#include "../Objects/Triangle.hpp"
 #include "../Lighting/Lighting.hpp"
 #include <vector>
 #include <cstdlib>
@@ -24,19 +24,24 @@ private:
 	float minX, maxX;
 	float minY, maxY;
 	float minZ, maxZ;
+	//Circle circleObject;
+	//std::vector<Point> quarter;
+	//std::vector<Point> line;
+	Lighting light;
+	//Line lineSegment;
 	SDL_Event keyEvent;
-	SDL_Renderer* mainRenderer, * oldRenderer;
+	SDL_Renderer* mainRenderer;
 	SDL_Window* mainWindow;
-	Point OO;
-	void RenderCircle(std::vector<Point>);
+	//Point OO;
+	/*void RenderCircle(std::vector<Point>);
 	std::vector<Point> Points;
 	std::vector<Line> Lines;
 	std::vector<Triangle> Triangles;
-	std::vector<Point> temp;
+	std::vector<Point> temp;*/
 	bool playing = true;
 	void QuitNicely();
 	float Ilumination = 1.0;//At leas it has to be the color set
 public:	
-	void RenderScene(std::vector<Point>, std::vector<Line>, std::vector<Triangle>);
+	void RenderScene();
 	void Init(int, int);
 };

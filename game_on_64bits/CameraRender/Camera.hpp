@@ -4,6 +4,7 @@
 #include "../Objects/Circle.hpp"
 //#include "../Objects/Line.hpp"
 #include "../Objects/Triangle.hpp"
+#include "../Lighting/Lighting.hpp"
 #include <vector>
 #include <cstdlib>
 #include <thread>
@@ -28,10 +29,14 @@ private:
 	SDL_Window* mainWindow;
 	Point OO;
 	void RenderCircle(std::vector<Point>);
+	std::vector<Point> Points;
+	std::vector<Line> Lines;
+	std::vector<Triangle> Triangles;
 	std::vector<Point> temp;
 	bool playing = true;
 	void QuitNicely();
+	float Ilumination = 1.0;//At leas it has to be the color set
 public:	
-	void RenderScene(std::vector<Point>);
+	void RenderScene(std::vector<Point>, std::vector<Line>, std::vector<Triangle>);
 	void Init(int, int);
 };

@@ -33,6 +33,9 @@
     <ClCompile Include="Objects\Triangle.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="Lighting\Lighting.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Point.hpp">
@@ -45,6 +48,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Triangle.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Lighting\Lighting.hpp">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

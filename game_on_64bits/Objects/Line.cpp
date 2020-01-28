@@ -6,27 +6,42 @@ std::vector<Point> Line::CreateLine(Point _start, Point _end) {
 	Bresenham algorithm
 	*/
 	std::vector<Point> lineSegment;
+	start = _start;
+	end = _end;
 	Point temp = _start;
-	int dx = 0, dy = 0, sx = 0, sy = 0, err = 0;
+	int dx = 0, dy = 0, sx = 0, sy = 0, err = 0, p = 0;
 	dx = _end.Position[0] - _start.Position[0];
 	dy = _end.Position[1] - _start.Position[1];
+	p = 2 * dy - dx;
 	sx = dx < 0 ? -1 : 1;
 	sy = dy < 0 ? -1 : 1;
 	err = dx - dy;
 	while (temp.Position[0] != _end.Position[0] && 
 		temp.Position[1] != _end.Position[1]) {
 		int err2 = err * 2;
-		lineSegment.push_back(temp);
 		if (err2 >= -dy) {
-			err -= abs(dy);
+			err -= dy;
 			temp.Position[0] += sx;
 		}
 		if(err2 < dx){
 			err += dx;
 			temp.Position[1] += sy;
 		}
+		lineSegment.push_back(temp);
 	}
-	//lineSegment.push_back(_end);
+	/*while (temp.Position[0] < _end.Position[0]) {
+		if (p >= 0) {
+			lineSegment.push_back(temp);
+			temp.Position[1] += 1;
+			p = p + 2 * dy - 2 * dx;
+		}
+		else {
+			lineSegment.push_back(temp);
+			p = p + 2 * dy;
+		}
+		temp.Position[0] += 1;
+	}*/
+	lineSegment.push_back(_end);
 	return lineSegment;
 }
 std::vector<Point> Line::CreateLineDDA(Point _start, Point _end) {

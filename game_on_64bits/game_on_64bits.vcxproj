@@ -119,12 +119,14 @@
   <ItemGroup>
     <ClCompile Include="CameraRender\Camera.cpp" />
     <ClCompile Include="CameraRender\Camera.hpp" />
+    <ClCompile Include="Lighting\Lighting.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Objects\Circle.cpp" />
     <ClCompile Include="Objects\Line.cpp" />
     <ClCompile Include="Objects\Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Lighting\Lighting.hpp" />
     <ClInclude Include="Objects\Line.hpp" />
     <ClInclude Include="Objects\Point.hpp" />
     <ClInclude Include="Objects\Circle.hpp" />

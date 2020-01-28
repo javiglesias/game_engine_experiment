@@ -1,9 +1,10 @@
 #include "Camera.hpp"
+#include <queue>
 
 void Camera::Init(int Width, int Height) {
-	std::vector<Point> Points;
 	Circle circleObject;
 	Line lineSegment;
+	Lighting light;
 	std::vector<Point> quarter;
 	std::vector<Point> line;
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) 
@@ -11,9 +12,9 @@ void Camera::Init(int Width, int Height) {
 	mainWindow = SDL_CreateWindow("mysterious-hat-engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		Width, Height, SDL_WINDOW_SHOWN);
 	oldRenderer = mainRenderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_TARGETTEXTURE);
-	OO.Position[0] = Width/2;
-	OO.Position[1] = Height/2;
-	OO.Position[2] = 0; //2-D
+	OO.Position[0] = 0;
+	OO.Position[1] = 0;
+	OO.Position[2] = 0;
 	Points.push_back(OO);
 	temp = Points;
 	while (playing) {
@@ -23,7 +24,9 @@ void Camera::Init(int Width, int Height) {
 		case SDL_MOUSEMOTION:
 			int mouseX, mouseY;
 			SDL_GetMouseState(&mouseX, &mouseY);
-			std::cout << "(" << mouseX << "," << mouseY << ")" << std::endl;
+			light.Position[0] = (int)OO.Position[0];
+			light.Position[1] = (int)OO.Position[1];
+			Ilumination = light.CalculateLight(mouseX, mouseY);
 			break;
 		case SDL_MOUSEBUTTONDOWN: {
 			int mouseX, mouseY;
@@ -34,7 +37,6 @@ void Camera::Init(int Width, int Height) {
 			T.Position[2] = 0;
 			quarter = circleObject.CreateCircle(T, 100);
 			Points.insert(Points.end(), quarter.begin(), quarter.end());
-			//RenderCircle(quarter);
 			break;
 		}
 		case SDL_KEYDOWN:
@@ -83,17 +85,20 @@ void Camera::Init(int Width, int Height) {
 				S.Position[0] = T.Position[0]-20;
 				S.Position[1] = T.Position[1];
 				S.Position[2] = 0;
-				trianglePoints = triangle.CreateTriangle(X, T, S);
-				Points.insert(Points.end(), trianglePoints.begin(), trianglePoints.end());
+				triangle.CreateTriangle(mainRenderer, X, T, S);
+				//Points.insert(Points.end(), trianglePoints.begin(), trianglePoints.end());
 			}
 			if (keyEvent.key.keysym.sym == SDLK_w)
 			{
-				Point T;
+				Point T, S;
 				int mouseX, mouseY;
 				SDL_GetMouseState(&mouseX, &mouseY);
-				T.Position[0] = mouseX;
-				T.Position[1] = mouseY;
-				line = lineSegment.CreateLine(OO, T);
+				std::vector<Point> lineConverted;
+				T.Position[0] = mouseX - OO.Position[0];
+				T.Position[1] = mouseY - OO.Position[1];
+				S.Position[0] = 0;
+				S.Position[1] = 0;
+				line = lineSegment.CreateLine(S, T);
 				Points.insert(Points.end(), line.begin(), line.end());
 			}
 			break;
@@ -102,7 +107,7 @@ void Camera::Init(int Width, int Height) {
 		}
 		if (!quarter.empty())
 			RenderCircle(quarter);
-		RenderScene(Points);
+		RenderScene(Points, Lines, Triangles);
 	}
 }
 void Camera::RenderCircle(std::vector<Point> circleToRender) {
@@ -113,13 +118,30 @@ void Camera::RenderCircle(std::vector<Point> circleToRender) {
 	}
 	SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 }
-void Camera::RenderScene(std::vector<Point> Points) {
+void Camera::RenderScene(std::vector<Point> points, std::vector<Line> lines, std::vector<Triangle> triangles) {
 	SDL_SetRenderDrawColor(mainRenderer, 0x00, 0x00, 0x00, 0x00);
-	for each (auto item in Points)
-	{
-		SDL_RenderDrawPoint(mainRenderer, item.Position[0], item.Position[1]);	
-	}
-	SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	if(points.size() > 0)
+		for each (auto item in points)
+		{
+			SDL_RenderDrawPoint(mainRenderer, item.Position[0], item.Position[1]);	
+		}
+	if(lines.size() > 0)
+		for each (auto item in lines)
+		{
+			SDL_RenderDrawLine(mainRenderer, item.start.Position[0], item.start.Position[1],
+				item.end.Position[0], item.end.Position[1]);
+		}
+	if(triangles.size() > 0)
+		for each (auto item in triangles)
+		{
+			SDL_RenderDrawLine(mainRenderer,  item.l1.start.Position[0], item.l1.start.Position[1],
+				item.l1.end.Position[0], item.l1.end.Position[0]);
+			SDL_RenderDrawLine(mainRenderer, item.l2.start.Position[0], item.l2.start.Position[1],
+				item.l2.end.Position[0], item.l2.end.Position[0]);
+			SDL_RenderDrawLine(mainRenderer, item.l3.start.Position[0], item.l3.start.Position[1],
+				item.l3.end.Position[0], item.l3.end.Position[0]);
+		}
+	SDL_SetRenderDrawColor(mainRenderer, 0xFF*Ilumination, 0xFF*Ilumination, 0xFF*Ilumination, 0xFF);
 	SDL_RenderPresent(mainRenderer);
 	SDL_RenderClear(mainRenderer);
 }

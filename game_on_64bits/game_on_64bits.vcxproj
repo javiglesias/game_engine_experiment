@@ -119,6 +119,7 @@
   <ItemGroup>
     <ClCompile Include="CameraRender\Camera.cpp" />
     <ClCompile Include="CameraRender\Camera.hpp" />
+    <ClCompile Include="DungeonGame\Player.cpp" />
     <ClCompile Include="Lighting\Lighting.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Objects\Circle.cpp" />
@@ -126,10 +127,11 @@
     <ClCompile Include="Objects\Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DungeonGame\Room.hpp" />
     <ClInclude Include="Lighting\Lighting.hpp" />
     <ClInclude Include="Objects\Line.hpp" />
     <ClInclude Include="Objects\MapGenerator.hpp" />
-    <ClInclude Include="Objects\Player.hpp" />
+    <ClInclude Include="DungeonGame\Player.hpp" />
     <ClInclude Include="Objects\Point.hpp" />
     <ClInclude Include="Objects\Circle.hpp" />
     <ClInclude Include="Objects\Triangle.hpp" />

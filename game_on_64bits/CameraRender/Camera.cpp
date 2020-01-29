@@ -1,8 +1,10 @@
 #include "Camera.hpp"
 #include <queue>
 
-void Camera::Init(int Width, int Height)
+void Camera::Init(int _Width, int _Height)
 {
+	Width = _Width;
+	Height = _Height;
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) 
 		return;
 	mainWindow = SDL_CreateWindow("mysterious-hat-engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -17,7 +19,7 @@ void Camera::Init(int Width, int Height)
 			SDL_GetMouseState(&mouseX, &mouseY);
 			light.Position[0] = 0;
 			light.Position[1] = 0;
-			Ilumination = light.CalculateLight(mouseX, mouseY);
+			//Ilumination = light.CalculateLight(mouseX, mouseY);
 			break;
 		case SDL_MOUSEBUTTONDOWN: {
 			/*int mouseX, mouseY;
@@ -38,35 +40,40 @@ void Camera::Init(int Width, int Height)
 			if (keyEvent.key.keysym.sym == SDLK_g)
 			{
 				//Generate the map
-				SDL_RenderDrawLine(mainRenderer, 0, 0, 100, 100);
-				
-				
+				ClearRenderer();
+				GenerateMap();
+				FirstPlayer.SetStart(11.0, 11.0);
+				mapGenerated = true;
 			}
-			/*
+			
 			if (keyEvent.key.keysym.sym == SDLK_a)
 			{
-				for (int i = 0; i < Points.size(); ++i)
+				/*for (int i = 0; i < Points.size(); ++i)
 				{
 					Points[i] = Points[i].Scale(0.5, 0.5, 0);
-				}
+				}*/
+				FirstPlayer.Move(1.0, 3);
 			}
 			if (keyEvent.key.keysym.sym == SDLK_s)
 			{
-				for (int i = 0; i < Points.size(); ++i)
+				/*for (int i = 0; i < Points.size(); ++i)
 				{
 					Points[i] = Points[i].Scale(2, 2, 0); 
-				}
+				}*/
+				FirstPlayer.Move(1.0, 0);
 			}
-			if (keyEvent.key.keysym.sym == SDLK_r)
+			if (keyEvent.key.keysym.sym == SDLK_w)
 			{
-				for (int i = 0; i < Points.size(); ++i)
+				/*for (int i = 0; i < Points.size(); ++i)
 				{
 					Points[i] = Points[i].RotatePoint("XY", 15);
-				}
+				}*/
+				FirstPlayer.Move(1.0, 1);
 			}
-			if (keyEvent.key.keysym.sym == SDLK_f)
+			if (keyEvent.key.keysym.sym == SDLK_d)
 			{
-				Triangle triangle;
+				FirstPlayer.Move(1.0, 2);
+				/*Triangle triangle;
 				std::vector<Point> trianglePoints;
 				int mouseX = 0, mouseY = 0;
 				Point X, T, S;
@@ -80,10 +87,11 @@ void Camera::Init(int Width, int Height)
 				S.Position[0] = T.Position[0]-20;
 				S.Position[1] = T.Position[1];
 				S.Position[2] = 0;
-				triangle.CreateTriangle(mainRenderer, X, T, S);
+				triangle.CreateTriangle(mainRenderer, X, T, S);*/
 				//Points.insert(Points.end(), trianglePoints.begin(), trianglePoints.end());
+				
 			}
-			if (keyEvent.key.keysym.sym == SDLK_w)
+			/*if (keyEvent.key.keysym.sym == SDLK_w)
 			{
 				Point T, S;
 				int mouseX, mouseY;
@@ -115,7 +123,17 @@ void Camera::Init(int Width, int Height)
 	SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 }*/
 void Camera::RenderScene() {
-	//SDL_SetRenderDrawColor(mainRenderer, 0x00, 0x00, 0x00, 0x00);
+	ClearRenderer();
+	if(mapGenerated)
+	{
+		SDL_SetRenderDrawColor(mainRenderer, 0x00, 0xEE, 0x00, 0x00);
+		float* player = FirstPlayer.CheckPosition();
+		SDL_RenderDrawPoint(mainRenderer, player[0], player[1]);
+		std::cout << player[0]
+			<< ","
+			<< player[1]
+			<< std::endl;
+	}
 	/*if(points.size() > 0)
 		for each (auto item in points)
 		{
@@ -137,15 +155,28 @@ void Camera::RenderScene() {
 			SDL_RenderDrawLine(mainRenderer, item.l3.start.Position[0], item.l3.start.Position[1],
 				item.l3.end.Position[0], item.l3.end.Position[0]);
 		}*/
-	SDL_SetRenderDrawColor(mainRenderer, 0xFF*Ilumination, 0xFF*Ilumination, 0xFF*Ilumination, 0xFF);
+	SDL_SetRenderDrawColor(mainRenderer, 0x00*Ilumination, 0x00*Ilumination, 0x00*Ilumination, 0xFF);
 	SDL_RenderPresent(mainRenderer);
 }
-void ClearRenderer(SDL_Renderer *mainRenderer)
+void Camera::ClearRenderer()
 {
 	SDL_RenderClear(mainRenderer);
+	if(mapGenerated)
+		GenerateMap();
+	
 }
 void Camera::QuitNicely() {
 	SDL_DestroyRenderer(mainRenderer);
 	SDL_DestroyWindow(mainWindow);
 	SDL_Quit();
+}
+void Camera::GenerateMap()
+{
+	SDL_SetRenderDrawColor(mainRenderer, 0xEE, 0x00, 0x00, 0x00);
+	SDL_RenderDrawLine(mainRenderer, 10, 10, Width - 10, 10);
+	SDL_RenderDrawLine(mainRenderer, Width - 10, 10, Width - 10, Height - 10);
+	SDL_RenderDrawLine(mainRenderer, Width - 10, Height - 10, 10, Height - 10);
+	SDL_RenderDrawLine(mainRenderer, 10, Height - 10, 10, 10);
+	SDL_RenderDrawLine(mainRenderer, Width / 2, 10, Width / 2, Height - 10);
+	SDL_RenderDrawLine(mainRenderer, 10, Height / 2, Width - 10, Height / 2);
 }

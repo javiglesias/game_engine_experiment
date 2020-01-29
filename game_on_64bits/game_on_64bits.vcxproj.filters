@@ -36,6 +36,9 @@
     <ClCompile Include="Lighting\Lighting.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="DungeonGame\Player.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Point.hpp">
@@ -53,10 +56,13 @@
     <ClInclude Include="Lighting\Lighting.hpp">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Player.hpp">
+    <ClInclude Include="Objects\MapGenerator.hpp">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\MapGenerator.hpp">
+    <ClInclude Include="DungeonGame\Player.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonGame\Room.hpp">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

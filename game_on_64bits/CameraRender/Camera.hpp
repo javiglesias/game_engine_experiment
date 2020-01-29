@@ -5,6 +5,7 @@
 //#include "../Objects/Line.hpp"
 //#include "../Objects/Triangle.hpp"
 #include "../Lighting/Lighting.hpp"
+#include "../DungeonGame/Player.hpp"
 #include <vector>
 #include <cstdlib>
 #include <thread>
@@ -24,13 +25,15 @@ private:
 	float minX, maxX;
 	float minY, maxY;
 	float minZ, maxZ;
+	Player FirstPlayer;
+	int Height, Width;
 	//Circle circleObject;
 	//std::vector<Point> quarter;
 	//std::vector<Point> line;
 	Lighting light;
 	//Line lineSegment;
 	SDL_Event keyEvent;
-	SDL_Renderer* mainRenderer;
+	SDL_Renderer* mainRenderer, *mapRenderer;
 	SDL_Window* mainWindow;
 	//Point OO;
 	/*void RenderCircle(std::vector<Point>);
@@ -39,8 +42,11 @@ private:
 	std::vector<Triangle> Triangles;
 	std::vector<Point> temp;*/
 	bool playing = true;
+	bool mapGenerated = false;
 	void QuitNicely();
 	float Ilumination = 1.0;//At leas it has to be the color set
+	void ClearRenderer();
+	void GenerateMap();
 public:	
 	void RenderScene();
 	void Init(int, int);

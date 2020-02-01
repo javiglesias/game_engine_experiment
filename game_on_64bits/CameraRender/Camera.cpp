@@ -5,8 +5,9 @@ void Camera::Init(int _Width, int _Height)
 {
 	Width = _Width;
 	Height = _Height;
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) 
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0 && TTF_Init() == -1)
 		return;
+	TitleFont = TTF_OpenFont("resources\\entypo.ttf", 16);
 	mainWindow = SDL_CreateWindow("mysterious-hat-engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		Width, Height, SDL_WINDOW_SHOWN);
 	mainRenderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_TARGETTEXTURE);
@@ -42,7 +43,7 @@ void Camera::Init(int _Width, int _Height)
 				//Generate the map
 				ClearRenderer();
 				GenerateMap();
-				FirstPlayer.SetStart(11.0, 11.0);
+				FirstPlayer.SetStart(11.0, 11.0, 10.0, 10.0);
 				mapGenerated = true;
 			}
 			
@@ -128,7 +129,14 @@ void Camera::RenderScene() {
 	{
 		SDL_SetRenderDrawColor(mainRenderer, 0x00, 0xEE, 0x00, 0x00);
 		float* player = FirstPlayer.CheckPosition();
-		SDL_RenderDrawPoint(mainRenderer, player[0], player[1]);
+		float* sizePlayer = FirstPlayer.GetSize();
+		//SDL_RenderDrawPoint(mainRenderer, player[0], player[1]);
+		SDL_Rect* playerSize = new SDL_Rect;
+		playerSize->w = sizePlayer[0];
+		playerSize->h = sizePlayer[1];
+		playerSize->x = player[0];
+		playerSize->y = player[1];
+		SDL_RenderFillRect(mainRenderer,playerSize);
 		std::cout << player[0]
 			<< ","
 			<< player[1]
@@ -166,6 +174,7 @@ void Camera::ClearRenderer()
 	
 }
 void Camera::QuitNicely() {
+	TTF_Quit();
 	SDL_DestroyRenderer(mainRenderer);
 	SDL_DestroyWindow(mainWindow);
 	SDL_Quit();

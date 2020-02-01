@@ -69,8 +69,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\Documents\Projects\Libraries\SDL2-2.0.10\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Documents\Projects\Libraries\SDL2-2.0.10\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Documents\Projects\C++_Projects\Bibliotecas\sdl2ttf-devel\SDL2_ttf-2.0.15\include;D:\Documents\Projects\Libraries\SDL2-2.0.10\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Documents\Projects\C++_Projects\Bibliotecas\sdl2ttf-devel\SDL2_ttf-2.0.15\lib\x64;D:\Documents\Projects\Libraries\SDL2-2.0.10\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -86,7 +86,7 @@
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -135,6 +135,14 @@
     <ClInclude Include="Objects\Point.hpp" />
     <ClInclude Include="Objects\Circle.hpp" />
     <ClInclude Include="Objects\Triangle.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\entypo.ttf" />
+    <Font Include="resources\Roboto-Bold.ttf" />
+    <Font Include="resources\Roboto-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\Icon4k.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

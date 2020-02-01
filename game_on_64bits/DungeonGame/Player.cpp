@@ -1,9 +1,11 @@
 #include "Player.hpp"
 
-void Player::SetStart(float startX, float startY)
+void Player::SetStart(float startX, float startY, float sizeX, float sizeY)
 {
 	Position[0] = startX;
 	Position[1] = startY;
+	Size[0] = sizeX;
+	Size[1] = sizeY;
 }
 //
 void Player::Move(float distance, int direction)
@@ -39,6 +41,10 @@ void Player::GetHit(float hitForce)
 float* Player::CheckPosition()
 {
 	return Position;
+}
+float* Player::GetSize()
+{
+	return Size;
 }
 
 Player::~Player() { }

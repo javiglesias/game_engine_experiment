@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include <SDL_ttf.h>
 //#include "../Objects/Point.hpp"
 //#include "../Objects/Circle.hpp"
 //#include "../Objects/Line.hpp"
@@ -35,6 +36,7 @@ private:
 	SDL_Event keyEvent;
 	SDL_Renderer* mainRenderer, *mapRenderer;
 	SDL_Window* mainWindow;
+	TTF_Font* TitleFont;
 	//Point OO;
 	/*void RenderCircle(std::vector<Point>);
 	std::vector<Point> Points;

@@ -8,8 +8,8 @@ private:
 	float Size[2] = {10.0, 10.0};
 	float LifePoints = 100.0;
 	int ActualRoom = 0;
-	std::string texture;
 public:
+	const char* texture;
 	void SetStart(float, float, float, float);
 	void Move(float, int);
 	void CheckRoom(float, float);

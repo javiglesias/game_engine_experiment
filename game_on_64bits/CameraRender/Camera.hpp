@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <SDL_image.h>
 //#include "../Objects/Point.hpp"
 //#include "../Objects/Circle.hpp"
 //#include "../Objects/Line.hpp"
@@ -49,6 +50,8 @@ private:
 	float Ilumination = 1.0;//At leas it has to be the color set
 	void ClearRenderer();
 	void GenerateMap();
+	void GenerateTitleScreen();
+	
 public:	
 	void RenderScene();
 	void Init(int, int);

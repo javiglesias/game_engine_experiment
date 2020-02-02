@@ -5,9 +5,10 @@ void Camera::Init(int _Width, int _Height)
 {
 	Width = _Width;
 	Height = _Height;
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0 && TTF_Init() == -1)
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0 
+		|| TTF_Init() == -1 
+		|| (TitleFont = TTF_OpenFont("D:\\Documents\\Projects\\C++_Projects\\game_on_64bits_VS\\game_on_64bits\\resources\\Roboto-Bold.ttf", 16)) == nullptr)
 		return;
-	TitleFont = TTF_OpenFont("resources\\entypo.ttf", 16);
 	mainWindow = SDL_CreateWindow("mysterious-hat-engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		Width, Height, SDL_WINDOW_SHOWN);
 	mainRenderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_TARGETTEXTURE);
@@ -141,6 +142,25 @@ void Camera::RenderScene() {
 			<< ","
 			<< player[1]
 			<< std::endl;
+	} else
+	{
+		const SDL_Color titleColor = { 255,0,0 };
+		SDL_Surface *title = TTF_RenderText_Solid(TitleFont, "mysterious-hat-engine", titleColor);
+		SDL_Texture *titleTexture = SDL_CreateTextureFromSurface(mainRenderer, title);
+		SDL_Rect *originPosition = new SDL_Rect;
+		originPosition->w = 0;
+		originPosition->h = 0;
+		originPosition->x = 0;
+		originPosition->y = 0;
+		SDL_Rect TitlePosition;
+		TitlePosition.x = Width / 2;
+		TitlePosition.y = Height / 2;
+		TitlePosition.w = title->w;
+		TitlePosition.h = title->h;
+		SDL_SetRenderDrawColor(mainRenderer, 255,0,0,255);
+		SDL_RenderCopy(mainRenderer, titleTexture, NULL, &TitlePosition);
+		SDL_FreeSurface(title);
+		SDL_DestroyTexture(titleTexture);
 	}
 	/*if(points.size() > 0)
 		for each (auto item in points)
@@ -181,7 +201,7 @@ void Camera::QuitNicely() {
 }
 void Camera::GenerateMap()
 {
-	SDL_SetRenderDrawColor(mainRenderer, 0xEE, 0x00, 0x00, 0x00);
+	SDL_SetRenderDrawColor(mainRenderer, 0x00, 0xEE, 0xEE, 0x00);
 	SDL_RenderDrawLine(mainRenderer, 10, 10, Width - 10, 10);
 	SDL_RenderDrawLine(mainRenderer, Width - 10, 10, Width - 10, Height - 10);
 	SDL_RenderDrawLine(mainRenderer, Width - 10, Height - 10, 10, Height - 10);
